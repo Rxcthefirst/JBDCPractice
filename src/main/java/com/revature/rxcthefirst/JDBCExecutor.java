@@ -10,24 +10,22 @@ import java.sql.Statement;
  */
 
 public class JDBCExecutor {
-	
+
 	public static void main(String[] args) {
-		
-		
-		//Using DBCM template to manage connections
-		DatabaseConnectionManager dcm = new DatabaseConnectionManager("localhost:5433", "revature", "postgres", "root");
-		
+
+		// Using DBCM template to manage connections
+		DatabaseConnectionManager dcm = new DatabaseConnectionManager("localhost:5433", "hplussport", "postgres",
+				"root");
+
 		try {
 			// Establish connection to PostGreSQL server
-			Connection connection = dcm.getConnection();		
-			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT COUNT (*) FROM customer WHERE state LIKE 'CA'");
-			while(resultSet.next()){
-				System.out.println(resultSet.getInt(1));
-			}
-		} catch(SQLException e) {
+			Connection connection = dcm.getConnection();
+			CustomerDAO customerDAO = new CustomerDAO(connection);
+			
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 }
